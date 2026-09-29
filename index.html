@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ImageCompress — Shrink images in your browser</title>
+    <title>ReduceImg — Shrink images in your browser</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <style>
 * {
             margin: 0;
@@ -13,19 +16,19 @@
         }
 
         :root {
-            --bg: #0c0c0f;
-            --panel: #141418;
-            --panel-2: #1c1c22;
-            --panel-3: #26262e;
-            --hairline: rgba(255, 255, 255, 0.08);
-            --text: #f5f5f7;
-            --text-2: #a7a7ae;
-            --text-3: #6e6e76;
-            --accent: #4d8dff;
-            --accent-2: #8b5cf6;
-            --accent-soft: rgba(77, 141, 255, 0.14);
-            --green: #30d158;
-            --green-soft: rgba(48, 209, 88, 0.14);
+            --bg: #f5f5f7;
+            --panel: #ffffff;
+            --panel-2: #f1f1f4;
+            --panel-3: #e8e8ec;
+            --hairline: rgba(0, 0, 0, 0.08);
+            --text: #1d1d1f;
+            --text-2: #6e6e73;
+            --text-3: #aeaeb2;
+            --accent: #2f6fed;
+            --accent-2: #7c3aed;
+            --accent-soft: rgba(47, 111, 237, 0.1);
+            --green: #1f9d4d;
+            --green-soft: rgba(31, 157, 77, 0.12);
         }
 
         html, body {
@@ -55,7 +58,7 @@
             padding: 14px 4px;
             position: sticky;
             top: 0;
-            background: rgba(12, 12, 15, 0.85);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             z-index: 50;
@@ -131,9 +134,10 @@
 
         .upload-section {
             margin-top: 20px;
-            border: 1.5px dashed rgba(255, 255, 255, 0.18);
+            border: 1.5px dashed rgba(0, 0, 0, 0.16);
             border-radius: 20px;
             background: var(--panel);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
             padding: 44px 24px;
             text-align: center;
             cursor: pointer;
@@ -146,7 +150,7 @@
 
         .upload-section.drag-over {
             border-color: var(--accent);
-            background: #15151d;
+            background: #eaf1ff;
         }
 
         .upload-section.has-image {
@@ -227,7 +231,7 @@
         }
 
         .change-image-btn:hover {
-            background: #2e2e38;
+            background: #e2e2e8;
         }
 
         /* ---------- Settings panel ---------- */
@@ -238,6 +242,7 @@
             border-radius: 20px;
             padding: 22px;
             margin-top: 16px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
         }
 
         .panel-title {
@@ -286,7 +291,7 @@
         .slider::-webkit-slider-runnable-track {
             height: 4px;
             border-radius: 2px;
-            background: #33333c;
+            background: #e3e3e8;
         }
 
         .slider::-webkit-slider-thumb {
@@ -296,14 +301,14 @@
             border-radius: 50%;
             background: #fff;
             margin-top: -9px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-            border: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(0, 0, 0, 0.08);
         }
 
         .slider::-moz-range-track {
             height: 4px;
             border-radius: 2px;
-            background: #33333c;
+            background: #e3e3e8;
         }
 
         .slider::-moz-range-thumb {
@@ -311,8 +316,8 @@
             height: 22px;
             border-radius: 50%;
             background: #fff;
-            border: none;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
         }
 
         .field-label {
@@ -342,7 +347,7 @@
         }
 
         .format-option:hover {
-            border-color: #3a3a44;
+            border-color: #c7c7cc;
             color: var(--text);
         }
 
@@ -463,6 +468,7 @@
             border: 1px solid var(--hairline);
             border-radius: 20px;
             padding: 22px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
         }
 
         .results.show {
@@ -685,7 +691,7 @@
         <header class="topbar">
             <div class="brand">
                 <span class="brand-mark"><i class="fas fa-compress-arrows-alt"></i></span>
-                <span class="brand-name">ImageCompress</span>
+                <span class="brand-name">ReduceImg</span>
             </div>
             <div class="privacy-pill"><i class="fas fa-lock"></i> 100% private</div>
         </header>
