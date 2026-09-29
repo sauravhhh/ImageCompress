@@ -56,13 +56,6 @@
             align-items: center;
             justify-content: space-between;
             padding: 14px 4px;
-            position: sticky;
-            top: 0;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            z-index: 50;
-            border-bottom: 1px solid var(--hairline);
         }
 
         .brand {
@@ -71,12 +64,17 @@
             gap: 10px;
         }
 
-        .brand-icon {
-            width: 32px;
-            height: 32px;
+        .brand-mark {
+            width: 30px;
+            height: 30px;
             border-radius: 9px;
-            display: block;
-            box-shadow: 0 2px 8px rgba(47, 111, 237, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #4d8dff, #8b5cf6);
+            color: #fff;
+            font-size: 15px;
+            box-shadow: 0 4px 14px rgba(77, 141, 255, 0.35);
         }
 
         .brand-name {
@@ -90,12 +88,12 @@
             align-items: center;
             gap: 7px;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 500;
             color: var(--text-2);
-            background: var(--panel-2);
+            background: var(--panel);
             border: 1px solid var(--hairline);
             padding: 8px 13px;
-            border-radius: 999px;
+            border-radius: 20px;
         }
 
         .privacy-pill i {
@@ -107,45 +105,19 @@
 
         .hero {
             text-align: center;
-            padding: 30px 8px 4px;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--accent);
-            background: var(--accent-soft);
-            border: 1px solid rgba(47, 111, 237, 0.2);
-            padding: 7px 14px;
-            border-radius: 999px;
-            margin-bottom: 16px;
-        }
-
-        .hero-badge i {
-            font-size: 11px;
+            padding: 26px 8px 4px;
         }
 
         .hero h1 {
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            line-height: 1.15;
-        }
-
-        .hero h1 .grad {
-            background: linear-gradient(135deg, var(--accent), var(--accent-2));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-size: 27px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
         }
 
         .hero p {
             color: var(--text-2);
             font-size: 14px;
-            margin: 10px auto 0;
+            margin-top: 8px;
             line-height: 1.55;
             max-width: 520px;
             margin-left: auto;
@@ -712,15 +684,14 @@
     <div class="page">
         <header class="topbar">
             <div class="brand">
-                <img src="icon.png" class="brand-icon" alt="ReduceImg icon">
+                <span class="brand-mark"><i class="fas fa-compress-arrows-alt"></i></span>
                 <span class="brand-name">ReduceImg</span>
             </div>
             <div class="privacy-pill"><i class="fas fa-lock"></i> 100% private</div>
         </header>
 
         <div class="hero">
-            <div class="hero-badge"><i class="fas fa-bolt"></i> Free &middot; No sign-up &middot; No uploads</div>
-            <h1>Compress images <span class="grad">in seconds</span></h1>
+            <h1>Compress images in seconds</h1>
             <p>Shrink JPG, PNG and WebP files right in your browser. Nothing ever leaves your device.</p>
         </div>
 
