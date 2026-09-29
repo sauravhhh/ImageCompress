@@ -126,6 +126,10 @@
 
         /* ---------- Upload ---------- */
 
+        .hidden {
+            display: none !important;
+        }
+
         .upload-section {
             margin-top: 20px;
             border: 1.5px dashed rgba(0, 0, 0, 0.16);
@@ -432,6 +436,10 @@
             box-shadow: none;
         }
 
+        .compress-btn i {
+            margin-right: 10px;
+        }
+
         .progress-bar {
             display: none;
             height: 6px;
@@ -735,7 +743,7 @@
             </div>
         </div>
 
-        <button id="compressBtn" class="compress-btn" disabled>Select an image to compress</button>
+        <button id="compressBtn" class="compress-btn" disabled><i class="fas fa-compress-arrows-alt"></i>Select an image to compress</button>
 
         <div class="progress-bar" id="progressBar">
             <div class="progress-fill" id="progressFill"></div>
@@ -857,6 +865,14 @@
             }
         }
 
+        function setCompressLabel(name) {
+            compressBtn.innerHTML = '';
+            const icon = document.createElement('i');
+            icon.className = 'fas fa-compress-arrows-alt';
+            compressBtn.appendChild(icon);
+            compressBtn.appendChild(document.createTextNode('Compress ' + name));
+        }
+
         function handleFile(file) {
             if (!file.type.startsWith('image/')) {
                 toast('Please select a valid image file.');
@@ -891,7 +907,7 @@
             changeImageBtn.classList.add('show');
             uploadSection.classList.add('has-image');
             
-            compressBtn.textContent = `Compress ${file.name}`;
+            setCompressLabel(file.name);
             compressBtn.disabled = false;
             results.classList.remove('show');
         }
@@ -1044,7 +1060,7 @@
             }
 
             compressBtn.disabled = false;
-            compressBtn.textContent = `Compress ${originalFile.name}`;
+            setCompressLabel(originalFile.name);
         }
 
         function downloadCompressedImage() {
