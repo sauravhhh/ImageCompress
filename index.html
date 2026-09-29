@@ -387,6 +387,16 @@
             color: var(--text-3);
         }
 
+        .target-field {
+            margin-top: 12px;
+        }
+
+        .opt {
+            color: var(--text-3);
+            font-weight: 400;
+            font-size: 12px;
+        }
+
         /* ---------- Compress button & progress ---------- */
 
         .compress-btn {
@@ -719,6 +729,10 @@
                     <input type="number" id="maxHeight" class="size-input" placeholder="Original">
                 </div>
             </div>
+            <div class="field target-field">
+                <label for="targetSize">Target size (KB) <span class="opt">optional · overrides quality</span></label>
+                <input type="number" id="targetSize" class="size-input" placeholder="e.g. 200" min="1">
+            </div>
         </div>
 
         <button id="compressBtn" class="compress-btn" disabled>Select an image to compress</button>
@@ -791,6 +805,7 @@
         const qualityValue = document.getElementById('qualityValue');
         const maxWidth = document.getElementById('maxWidth');
         const maxHeight = document.getElementById('maxHeight');
+        const targetSizeInput = document.getElementById('targetSize');
         const formatOptions = document.querySelectorAll('.format-option');
         const results = document.getElementById('results');
         const progressBar = document.getElementById('progressBar');
@@ -933,6 +948,24 @@
             };
         }
 
+        // Binary-search the highest quality that fits under targetBytes
+        async function compressToTarget(canvas, mimeType, targetBytes) {
+            const blobAt = (q) => new Promise(resolve => canvas.toBlob(resolve, mimeType, q));
+            let lo = 0.05, hi = 0.95, best = null;
+            for (let i = 0; i < 8; i++) {
+                const mid = (lo + hi) / 2;
+                const blob = await blobAt(mid);
+                if (!blob) break;
+                if (blob.size <= targetBytes) {
+                    best = blob;
+                    lo = mid;
+                } else {
+                    hi = mid;
+                }
+            }
+            return best || await blobAt(0.05);
+        }
+
         async function compressImage() {
             if (!originalFile) return;
 
@@ -972,11 +1005,20 @@
                 const quality = qualitySlider.value / 100;
                 const format = getSelectedFormat();
                 const mimeType = `image/${format}`;
+                const targetKB = parseFloat(targetSizeInput.value);
 
-                // Convert to blob
-                compressedBlob = await new Promise(resolve => {
-                    canvas.toBlob(resolve, mimeType, quality);
-                });
+                // Convert to blob (target size overrides quality when set)
+                let targetNote = '';
+                if (targetKB > 0) {
+                    const targetBytes = Math.round(targetKB * 1024);
+                    compressedBlob = await compressToTarget(canvas, mimeType, targetBytes);
+                    targetNote = compressedBlob && compressedBlob.size <= targetBytes
+                        ? ' · target met' : ' · closest possible';
+                } else {
+                    compressedBlob = await new Promise(resolve => {
+                        canvas.toBlob(resolve, mimeType, quality);
+                    });
+                }
 
                 // Calculate savings
                 const originalSize = originalFile.size;
@@ -988,7 +1030,7 @@
                 document.getElementById('compressedSize').textContent = formatFileSize(compressedSize);
                 document.getElementById('originalDimensions').textContent = `${img.width} × ${img.height}`;
                 document.getElementById('compressedDimensions').textContent = `${width} × ${height}`;
-                document.getElementById('savings').textContent = `${Math.max(0, savings)}% smaller`;
+                document.getElementById('savings').textContent = `${Math.max(0, savings)}% smaller${targetNote}`;
 
                 results.classList.add('show');
                 stopProgress();
