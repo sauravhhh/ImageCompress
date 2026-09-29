@@ -873,6 +873,14 @@
             compressBtn.appendChild(document.createTextNode('Compress ' + name));
         }
 
+        function setCompressingLabel() {
+            compressBtn.innerHTML = '';
+            const icon = document.createElement('i');
+            icon.className = 'fas fa-spinner fa-spin';
+            compressBtn.appendChild(icon);
+            compressBtn.appendChild(document.createTextNode('Compressing...'));
+        }
+
         function handleFile(file) {
             if (!file.type.startsWith('image/')) {
                 toast('Please select a valid image file.');
@@ -987,7 +995,7 @@
 
             const stopProgress = showProgress();
             compressBtn.disabled = true;
-            compressBtn.textContent = 'Compressing...';
+            setCompressingLabel();
 
             try {
                 // Create canvas and load image
