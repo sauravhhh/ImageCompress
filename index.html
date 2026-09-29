@@ -8,6 +8,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2f6fed">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="ReduceImg">
     <style>
 * {
             margin: 0;
@@ -807,6 +813,13 @@
         const imagePreview = document.getElementById('imagePreview');
         const imageInfo = document.getElementById('imageInfo');
         const changeImageBtn = document.getElementById('changeImageBtn');
+        // Register service worker for installable PWA + offline use
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').catch(() => {});
+            });
+        }
+
         const fileInput = document.getElementById('fileInput');
         const compressBtn = document.getElementById('compressBtn');
         const qualitySlider = document.getElementById('qualitySlider');
